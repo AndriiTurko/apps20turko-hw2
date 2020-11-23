@@ -20,12 +20,11 @@ public class ImmutableLinkedList implements ImmutableList{
     }
 
     public int checkIndex(int index) {
-        if (index + 1 > size) {
+        if (index - 1 > size) {
             throw new IndexOutOfBoundsException();
         } else if (index > size) {
             return 1;
         } else { return 0; }
-
     }
 
     @Override
@@ -45,43 +44,23 @@ public class ImmutableLinkedList implements ImmutableList{
 
     @Override
     public ImmutableLinkedList addAll(int index, Object[] c) {
-        int checker = checkIndex(index-1);
+        int check = checkIndex(index);
         int newSize = size + c.length;
-        Object[] newValues = new Object[newSize];
-        Node tempNode = head;
-        int i = 0;
-        for (;i < index; i++) {
-            System.out.println("i1 " + i);
-            newValues[i] = tempNode.data;
-            tempNode = tempNode.next;
-        }
-        Node saveNode = tempNode;
-        int temp = index - 1 + c.length;
-        for (Object obj: c) {
-            System.out.println("i2 " + i);
-            System.out.println(c[temp-i]);
-            newValues[i] = c[temp-i];
-            tempNode.next = new Node(obj);
-            tempNode = tempNode.next;
-            i++;
-        }
-        System.out.println("temp: " + tempNode.data);
-        System.out.println("save " + saveNode.data);
-        tempNode.next = saveNode;
+        Object[] newObjects = new Object[newSize];
 
-        if (newValues[newSize-1] == null) {
-            while (saveNode != null && i < newSize) {
-                System.out.println("i3 " + i);
-                System.out.println("data: " + saveNode.data);
-                newValues[i] = saveNode.data;
-                saveNode = saveNode.next;
-                i++;
-            }
+        int i = 0;
+        for (; i < index; i++) {
+            newObjects[i] = nodes[i];
         }
-        System.out.println("c: " + Arrays.toString(c));
-        System.out.println("objs: " + Arrays.toString(nodes));
-        System.out.println("result:" + Arrays.toString(newValues));
-        return new ImmutableLinkedList(newValues);
+        int temp = index + c.length;
+        for (;i < temp; i++) {
+            newObjects[i] = c[i - index];
+        }
+        for (; i < newSize; i++){
+            newObjects[i] = nodes[i-c.length];
+        }
+
+        return new ImmutableLinkedList(newObjects);
     }
 
     @Override

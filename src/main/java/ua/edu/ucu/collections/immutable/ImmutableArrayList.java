@@ -9,9 +9,17 @@ public class ImmutableArrayList implements ImmutableList {
         this.objects = objects;
     }
 
+    public int checkIndex(int index) {
+        if (index - 1 > size) {
+            throw new IndexOutOfBoundsException();
+        } else if (index > size) {
+            return 1;
+        } else { return 0; }
+    }
+
     @Override
     public ImmutableArrayList add(Object e) {
-        return add(size-1, e);
+        return add(size, e);
     }
 
     @Override
@@ -21,20 +29,22 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public ImmutableArrayList addAll(Object[] c) {
-        return addAll(size-1, c);
+        return addAll(size, c);
     }
 
     @Override
     public ImmutableArrayList addAll(int index, Object[] c) {
+        int check = checkIndex(index);
         int newSize = size + c.length;
         Object[] newObjects = new Object[newSize];
+
         int i = 0;
         for (; i < index; i++) {
             newObjects[i] = objects[i];
         }
         int temp = index + c.length;
         for (;i < temp; i++) {
-            newObjects[i] = c[temp-i];
+            newObjects[i] = c[i - index];
         }
         for (; i < newSize; i++){
             newObjects[i] = objects[i-c.length];
