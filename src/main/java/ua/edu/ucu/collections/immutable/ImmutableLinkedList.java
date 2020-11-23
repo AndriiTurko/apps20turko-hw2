@@ -1,7 +1,5 @@
 package ua.edu.ucu.collections.immutable;
 
-import java.util.Arrays;
-
 public class ImmutableLinkedList implements ImmutableList{
     private final Node head;
     private final Object[] nodes;
@@ -19,12 +17,10 @@ public class ImmutableLinkedList implements ImmutableList{
         this.nodes = objects;
     }
 
-    public int checkIndex(int index) {
+    public void checkIndex(int index) {
         if (index - 1 > size) {
             throw new IndexOutOfBoundsException();
-        } else if (index > size) {
-            return 1;
-        } else { return 0; }
+        }
     }
 
     @Override
