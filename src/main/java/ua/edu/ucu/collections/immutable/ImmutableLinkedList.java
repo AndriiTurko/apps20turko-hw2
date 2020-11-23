@@ -44,7 +44,7 @@ public class ImmutableLinkedList implements ImmutableList{
 
     @Override
     public ImmutableLinkedList addAll(int index, Object[] c) {
-        int check = checkIndex(index);
+        checkIndex(index);
         int newSize = size + c.length;
         Object[] newObjects = new Object[newSize];
 
@@ -59,7 +59,6 @@ public class ImmutableLinkedList implements ImmutableList{
         for (; i < newSize; i++){
             newObjects[i] = nodes[i-c.length];
         }
-
         return new ImmutableLinkedList(newObjects);
     }
 
@@ -80,7 +79,7 @@ public class ImmutableLinkedList implements ImmutableList{
         int newSize = size - 1;
         Object[] newObjects = new Object[newSize];
         int i = 0;
-        for (; i < index-1; i++) {
+        for (; i < index; i++) {
             curNode = curNode.next;
             newObjects[i] = nodes[i];
         }
@@ -138,7 +137,7 @@ public class ImmutableLinkedList implements ImmutableList{
     public ImmutableLinkedList addFirst(Object e) { return add(0, e); }
 
     public ImmutableLinkedList addLast(Object e) {
-        return add(size-1, e);
+        return add(size, e);
     }
 
     public Object getFirst() {
